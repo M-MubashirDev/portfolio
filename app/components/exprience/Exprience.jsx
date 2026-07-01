@@ -4,6 +4,7 @@ import { useState } from "react";
 import UmbrellaArch from "./UmbrellaArch";
 import { CircleSlider } from "./CircleSlider";
 import { WhyChoseText } from "./ExprienceText";
+import { FadeUp } from "../ui/GsapFade";
 
 const BRAND_SLIDES = [
   {
@@ -91,7 +92,7 @@ export default function Exprience() {
           text-center capitalize tracking-tighter leading-none text-foreground font-bold 
           p-2 sm:p-4 textImage"
         >
-          tech stack
+          Experience{" "}
         </h2>
 
         <div className="flex flex-col items-center">
@@ -101,11 +102,13 @@ export default function Exprience() {
                 key={`${currentContent.name}-${item.title}-${index}`}
                 className={textPositions[index]}
               >
-                <WhyChoseText
-                  active={activeTab === tabKeys[index]}
-                  title={item.title}
-                  descrption={item.description}
-                />
+                <FadeUp>
+                  <WhyChoseText
+                    active={activeTab === tabKeys[index]}
+                    title={item.title}
+                    descrption={item.description}
+                  />
+                </FadeUp>
               </div>
             ))}
           </div>

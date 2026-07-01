@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Masonry from "./Masonry";
+import { FadeUp } from "../ui/GsapFade";
 
 const items = [
   {
@@ -203,14 +204,16 @@ export default function Skills() {
 
       {/* Content */}
       <div className="main-container relative z-10 px-3 sm:px-4 md:px-6">
-        <h2
-          className="font-heading 
+        <FadeUp>
+          <h2
+            className="font-heading 
           text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl 
           text-center capitalize tracking-tighter leading-none text-foreground font-bold 
           p-2 sm:p-4 textImage"
-        >
-          tech stack
-        </h2>
+          >
+            tech stack
+          </h2>
+        </FadeUp>
 
         {/* Auto-sizing wrapper — Masonry now calculates its own height */}
         <div className="w-full mt-6 sm:mt-8 md:mt-12">
