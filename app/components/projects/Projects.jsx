@@ -202,7 +202,7 @@ export default function Projects() {
   return (
     <div
       ref={containerRef}
-      className="w-full main-container bg-[#0a0a0a] text-white select-none"
+      className="w-full main-container bg-[#0a0a0a] rounded-t-[40px] text-white select-none"
     >
       {/* DESKTOP ART DIRECTION TRACKER */}
       <div
@@ -248,7 +248,7 @@ export default function Projects() {
               <span className="p-subtitle block font-mono text-[11px] tracking-[0.4em] text-white/40 mb-3 uppercase">
                 {project.subtitle}
               </span>
-              <h2 className="p-title font-heading font-black text-[9vw] leading-[0.85] tracking-tighter text-white uppercase select-none">
+              <h2 className="p-title textImageBlack font-heading font-black text-[9vw] leading-[0.85] tracking-tighter text-white uppercase select-none">
                 {project.title}
               </h2>
             </div>

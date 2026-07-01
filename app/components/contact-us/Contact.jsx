@@ -81,7 +81,7 @@ export default function Contact() {
             <span className="contact-subtitle block font-mono text-[11px] tracking-[0.4em] text-white/60 uppercase mb-2">
               // INITIATE TRANSITION
             </span>
-            <h2 className="contact-title font-sans font-black text-5xl md:text-7xl tracking-tighter uppercase leading-[0.9] text-white">
+            <h2 className="contact-title textImageBlack font-sans font-black text-5xl md:text-7xl tracking-tighter uppercase leading-[0.9] text-white">
               START A<br />
               PROJECT
             </h2>

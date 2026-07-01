@@ -2,9 +2,10 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from "gsap";
 
-// Stable hook — no array recreation issue
+// Stable breakpoint hook
 const useBreakpoint = () => {
   const [bp, setBp] = useState({ columns: 2, multiplier: 0.4 });
 
@@ -50,6 +51,7 @@ const useBreakpoint = () => {
   return bp;
 };
 
+// Measure container size
 const useMeasure = () => {
   const ref = useRef(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -67,6 +69,7 @@ const useMeasure = () => {
   return [ref, size];
 };
 
+// Preload images
 const preloadImages = async (urls) => {
   await Promise.all(
     urls.map(
@@ -150,43 +153,72 @@ const Masonry = ({
 
   const hasMounted = useRef(false);
 
+  // Grid animation effect
   useLayoutEffect(() => {
-    if (!imagesReady || !grid.length) return;
-    grid.forEach((item, index) => {
-      const selector = `[data-key="${item.id}"]`;
-      const animProps = {
-        x: item.x,
-        y: item.y,
-        width: item.w,
-        height: item.h,
-      };
-      if (!hasMounted.current) {
-        const start = getInitialPosition(item);
-        gsap.fromTo(
-          selector,
-          {
-            opacity: 0,
-            x: start.x,
-            y: start.y,
-            width: item.w,
-            height: item.h,
-            ...(blurToFocus && { filter: "blur(10px)" }),
-          },
-          {
-            opacity: 1,
+    if (!imagesReady || !grid.length || !width) return;
+
+    let ctx = gsap.context(() => {
+      grid.forEach((item, index) => {
+        const selector = `[data-key="${item.id}"]`;
+        const animProps = {
+          x: item.x,
+          y: item.y,
+          width: item.w,
+          height: item.h,
+        };
+
+        if (!hasMounted.current) {
+          const start = getInitialPosition(item);
+          gsap.fromTo(
+            selector,
+            {
+              opacity: 0,
+              x: start.x,
+              y: start.y,
+              width: item.w,
+              height: item.h,
+              ...(blurToFocus && { filter: "blur(10px)" }),
+            },
+            {
+              opacity: 1,
+              ...animProps,
+              ...(blurToFocus && { filter: "blur(0px)" }),
+              duration: 0.8,
+              ease: "power3.out",
+              delay: index * stagger,
+            },
+          );
+        } else {
+          gsap.to(selector, {
             ...animProps,
-            ...(blurToFocus && { filter: "blur(0px)" }),
-            duration: 0.8,
-            ease: "power3.out",
-            delay: index * stagger,
-          },
-        );
-      } else {
-        gsap.to(selector, { ...animProps, duration, ease, overwrite: "auto" });
-      }
-    });
+            duration: duration,
+            ease: ease,
+            overwrite: "auto",
+          });
+        }
+      });
+    }, containerRef);
+
     hasMounted.current = true;
-  }, [grid, imagesReady]);
+
+    // Refresh ScrollTrigger after grid settles
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 1000);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(refreshTimer);
+    };
+  }, [grid, imagesReady, width]);
+
+  // Refresh ScrollTrigger when breakpoint changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [columns, multiplier]);
 
   const handleMouseEnter = (id) => {
     const wrapper = document.querySelector(`[data-key="${id}"]`);

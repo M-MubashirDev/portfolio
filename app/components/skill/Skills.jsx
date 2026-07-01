@@ -131,7 +131,7 @@ export default function Skills() {
   const iconSizeLg = Math.max(18, Math.round(30 * scale));
 
   return (
-    <section className="relative w-full overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 rounded-t-[20px] sm:rounded-t-[28px] md:rounded-t-[32px] bg-white z-20">
+    <section className="relative w-full py-12 sm:py-16 md:py-20 lg:py-24 rounded-t-[20px] sm:rounded-t-[28px] md:rounded-t-[32px] bg-white z-20">
       {/* ORBIT LINES */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
         <div

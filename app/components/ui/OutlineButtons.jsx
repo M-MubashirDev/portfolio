@@ -7,6 +7,7 @@ export default function OutlineButton({
   icon = "→",
   variant = "dark", // "dark" | "light"
   className = "",
+  disabled = false,
   ...rest
 }) {
   const Tag = as === "button" ? "button" : "a";

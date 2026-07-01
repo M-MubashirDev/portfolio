@@ -20,7 +20,12 @@ export default function Home() {
 
   useGSAP(
     () => {
-      const sectionsToPin = [".section-hero", ".section-skills"];
+      const sectionsToPin = [
+        ".section-hero",
+        ".section-skills",
+        ".section-exprience",
+      ];
+
       const allSections = [
         ".section-hero",
         ".section-skills",
@@ -29,35 +34,42 @@ export default function Home() {
         ".section-contact",
       ];
 
-      /* ---- PIN SECTIONS ---- */
+      /* ---- PIN SECTIONS (all screen sizes) ---- */
       sectionsToPin.forEach((section, index) => {
-        let startPosition = index === 0 ? "top top" : "center top";
+        const startPosition = index === 0 ? "top top" : "center top";
+
         ScrollTrigger.create({
           trigger: section,
           start: startPosition,
           end: () => `+=${document.querySelector(section)?.offsetHeight || 0}`,
           pin: true,
           pinSpacing: false,
+          invalidateOnRefresh: true,
         });
       });
 
       /* ---- FADE OUT PREVIOUS SECTION ---- */
       allSections.forEach((section, index) => {
         if (index === 0) return;
+
+        // Skip Projects fade-out on mobile (it's a tall scroll list)
+        const isProjects = allSections[index - 1] === ".section-projects";
+
         gsap.to(allSections[index - 1], {
           opacity: 0,
           scrollTrigger: {
             trigger: section,
-            start: "top bottom",
+            start: isProjects ? "top 50%" : "top bottom",
             end: "top top",
             scrub: 1,
+            invalidateOnRefresh: true,
           },
         });
       });
 
       /* ---- SCALE IN CURRENT SECTION (EXCEPT PROJECTS) ---- */
       allSections.forEach((section, index) => {
-        if (index === 0 || section === ".section-projects") return; // Skip projects here to prevent transform breakages
+        if (index === 0 || section === ".section-projects") return;
         gsap.from(section, {
           scale: 0.92,
           borderRadius: "40px",
@@ -66,6 +78,7 @@ export default function Home() {
             start: "top bottom",
             end: "top top",
             scrub: 1,
+            invalidateOnRefresh: true,
           },
         });
       });
@@ -88,11 +101,11 @@ export default function Home() {
         <Skills />
       </section>
 
-      <section className="section-projects relative z-30 w-full">
+      <section className="section-projects relative z-30 w-full rounded-t-[40px]">
         <Projects />
       </section>
 
-      <section className="section-exprience relative z-40 min-h-screen w-full rounded-t-[40px]">
+      <section className="section-exprience relative z-40 min-h-screen w-full rounded-t-[40px] overflow-hidden">
         <div className="hidden md:block w-full">
           <Exprience />
         </div>
@@ -100,10 +113,13 @@ export default function Home() {
           <ProcessTimeline />
         </div>
       </section>
+
       <section className="section-contact relative z-50 min-h-screen rounded-t-[40px] overflow-hidden">
         <Contact />
       </section>
-      <section className="section-footer relative z-50 min-h-screen rounded-t-[40px] overflow-hidden">
+
+      {/* Footer stays normal — no overlap */}
+      <section className="section-footer relative z-50 rounded-t-[40px] overflow-hidden">
         <Footer />
       </section>
     </div>
