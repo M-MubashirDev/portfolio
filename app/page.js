@@ -12,6 +12,7 @@ import Skills from "./components/skill/Skills";
 import Contact from "./components/contact-us/Contact";
 import Footer from "./components/footer/Footer";
 import ProcessTimeline from "./components/exprience/ProcessTimeline";
+import NavBar from "./components/ui/NavBar";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,14 +35,11 @@ export default function Home() {
         ".section-contact",
       ];
 
-      /* ---- PIN SECTIONS (all screen sizes) ---- */
       sectionsToPin.forEach((section, index) => {
-        const startPosition = index === 0 ? "top top" : "center top";
         const isExprience = section === ".section-exprience";
         ScrollTrigger.create({
           trigger: section,
           start: () => {
-            // Mobile: pin experience only from bottom 60% so timeline is visible
             if (isExprience && window.innerWidth < 768) {
               return "bottom bottom";
             }
@@ -54,11 +52,8 @@ export default function Home() {
         });
       });
 
-      /* ---- FADE OUT PREVIOUS SECTION ---- */
       allSections.forEach((section, index) => {
         if (index === 0) return;
-
-        // Skip Projects fade-out on mobile (it's a tall scroll list)
         const isProjects = allSections[index - 1] === ".section-projects";
 
         gsap.to(allSections[index - 1], {
@@ -73,7 +68,6 @@ export default function Home() {
         });
       });
 
-      /* ---- SCALE IN CURRENT SECTION (EXCEPT PROJECTS) ---- */
       allSections.forEach((section, index) => {
         if (index === 0 || section === ".section-projects") return;
         gsap.from(section, {
@@ -95,39 +89,53 @@ export default function Home() {
   );
 
   return (
-    <div
-      ref={container}
-      className="relative w-full overflow-x-hidden bg-[#0a0a0a]"
-    >
-      <section className="section-hero relative z-10 min-h-screen">
-        <Hero />
-      </section>
+    <>
+      <NavBar />
+      <div
+        ref={container}
+        className="relative w-full overflow-x-hidden bg-[#0a0a0a]"
+      >
+        <section id="home" className="section-hero relative z-10 min-h-screen">
+          <Hero />
+        </section>
 
-      <section className="section-skills relative z-20 min-h-screen rounded-t-[40px] overflow-hidden">
-        <Skills />
-      </section>
+        <section
+          id="skills"
+          className="section-skills relative z-20 min-h-screen rounded-t-[40px] overflow-hidden"
+        >
+          <Skills />
+        </section>
 
-      <section className="section-projects relative z-30 w-full rounded-t-[40px]">
-        <Projects />
-      </section>
+        <section
+          id="projects"
+          className="section-projects relative z-30 w-full rounded-t-[40px]"
+        >
+          <Projects />
+        </section>
 
-      <section className="section-exprience relative z-40 min-h-screen w-full rounded-t-[40px] overflow-hidden">
-        <div className="hidden md:block w-full">
-          <Exprience />
-        </div>
-        <div className="block mb-16 md:hidden">
-          <ProcessTimeline />
-        </div>
-      </section>
+        <section
+          id="experience"
+          className="section-exprience relative z-40 min-h-screen w-full rounded-t-[40px] overflow-hidden"
+        >
+          <div className="hidden md:block w-full">
+            <Exprience />
+          </div>
+          <div className="block mb-16 md:hidden">
+            <ProcessTimeline />
+          </div>
+        </section>
 
-      <section className="section-contact relative z-50 min-h-screen rounded-t-[40px] overflow-hidden">
-        <Contact />
-      </section>
+        <section
+          id="contact"
+          className="section-contact relative z-50 min-h-screen rounded-t-[40px] overflow-hidden"
+        >
+          <Contact />
+        </section>
 
-      {/* Footer stays normal — no overlap */}
-      <section className="section-footer relative z-50 rounded-t-[40px] overflow-hidden">
-        <Footer />
-      </section>
-    </div>
+        <section className="section-footer relative z-50 rounded-t-[40px] overflow-hidden">
+          <Footer />
+        </section>
+      </div>
+    </>
   );
 }

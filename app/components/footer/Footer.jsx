@@ -98,27 +98,33 @@ export default function Footer() {
         {/* Top HUD */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 w-full">
           <div className="footer-reveal font-mono text-[10px] tracking-[0.3em] text-white uppercase">
-            // FULL STACK · SOFTWARE ENGINEER
+            {"// FULL STACK · SOFTWARE ENGINEER"}
           </div>
 
           <div className="footer-reveal flex gap-6 md:gap-8 font-mono text-[11px] font-bold tracking-wider text-white">
             <a
-              href="#work"
+              href="#home"
               className="hover:opacity-60 transition-opacity duration-300 uppercase"
             >
-              Work
+              Home
             </a>
             <a
-              href="#about"
+              href="#skills"
               className="hover:opacity-60 transition-opacity duration-300 uppercase"
             >
-              About
+              Skills
             </a>
             <a
-              href="#playground"
+              href="#projects"
               className="hover:opacity-60 transition-opacity duration-300 uppercase"
             >
-              Playground
+              Projects
+            </a>
+            <a
+              href="#experience"
+              className="hover:opacity-60 transition-opacity duration-300 uppercase"
+            >
+              Experience
             </a>
             <a
               href="#contact"
@@ -141,14 +147,14 @@ export default function Footer() {
 
           {/* Middle — Location */}
           <div className="footer-reveal font-mono text-[10px] text-white text-left md:text-center space-y-1">
-            <span className="block opacity-60">// Location</span>
+            <span className="block opacity-60">{"// Location"}</span>
             <p className="font-medium">ISLAMABAD, PK</p>
           </div>
 
           {/* Right — Social Icons */}
           <div className="footer-reveal flex flex-col items-start md:items-end gap-3">
             <span className="block font-mono text-[10px] text-white opacity-60 tracking-widest uppercase">
-              // Follow
+              {"// Follow"}
             </span>
             <div className="flex items-center gap-5">
               {socials.map((social) => (

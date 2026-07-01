@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/ui/NavBar";
 import { Toaster } from "react-hot-toast";
 
 const geist = Geist({
@@ -30,7 +29,6 @@ export default function RootLayout({ children }) {
       className={`${geist.variable} ${geistMono.variable} ${nunito.variable} h-full antialiased`}
     >
       <body>
-        <NavBar />
         {children}
         <Toaster
           position="top-center"

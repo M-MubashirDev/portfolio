@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
@@ -51,7 +50,7 @@ export default function Projects() {
     () => {
       const mm = gsap.matchMedia();
 
-      // Mobile setup (simple static cards)
+      // Mobile setup
       mm.add("(max-width: 767px)", () => {
         gsap.utils.toArray(".mobile-project-card").forEach((card) => {
           gsap.fromTo(
@@ -74,9 +73,76 @@ export default function Projects() {
       // Desktop setup
       mm.add("(min-width: 768px)", () => {
         const panels = gsap.utils.toArray(".project-panel");
+        const firstPanel = panels[0];
 
+        // ─── Initial state: everything hidden ───
+        gsap.set(panels, { opacity: 1, visibility: "visible" });
         gsap.set(panels.slice(1), { opacity: 0, visibility: "hidden" });
 
+        // First panel elements start hidden
+        gsap.set(firstPanel.querySelector(".p-bg-image"), {
+          opacity: 0,
+          scale: 1.1,
+        });
+        gsap.set(
+          [
+            firstPanel.querySelector(".p-title"),
+            firstPanel.querySelector(".p-subtitle"),
+          ],
+          { clipPath: "inset(100% 0 0 0)", y: 30 },
+        );
+        gsap.set(firstPanel.querySelectorAll(".meta-reveal"), {
+          opacity: 0,
+          y: 15,
+        });
+
+        // ─── SEPARATE intro animation for first panel ───
+        // Plays automatically when section enters viewport
+        // Reverses when scrolling back up past it
+        const introTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: scrollTrackRef.current,
+            start: "top 80%", // starts when section is 80% from top
+            end: "top 20%", // completes by the time it's 20% from top
+            toggleActions: "play none none reverse",
+            // play on enter, reverse on leave-back
+          },
+        });
+
+        introTl
+          .to(
+            firstPanel.querySelector(".p-bg-image"),
+            { opacity: 0.22, scale: 1, duration: 0.8, ease: "power2.out" },
+            0,
+          )
+          .to(
+            [
+              firstPanel.querySelector(".p-subtitle"),
+              firstPanel.querySelector(".p-title"),
+            ],
+            {
+              clipPath: "inset(0% 0 0% 0)",
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power3.out",
+            },
+            0.2,
+          )
+          .to(
+            firstPanel.querySelectorAll(".meta-reveal"),
+            {
+              opacity: (i, el) =>
+                el.classList.contains("tech-tag-aux") ? 0.35 : 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.04,
+              ease: "power2.out",
+            },
+            0.4,
+          );
+
+        // ─── Progress bar ───
         gsap.to(".global-progress-fill", {
           scaleX: 1,
           ease: "none",
@@ -88,6 +154,7 @@ export default function Projects() {
           },
         });
 
+        // ─── Master pinned timeline (scrub transitions) ───
         const masterTl = gsap.timeline({
           scrollTrigger: {
             trigger: scrollTrackRef.current,
@@ -102,38 +169,15 @@ export default function Projects() {
 
         panels.forEach((panel, index) => {
           if (index === 0) {
-            masterTl
-              .fromTo(
-                panel.querySelector(".p-bg-image"),
-                { opacity: 0, scale: 1.1 },
-                { opacity: 0.22, scale: 1, duration: 0.5 },
-                0,
-              )
-              .fromTo(
-                [
-                  panel.querySelector(".p-title"),
-                  panel.querySelector(".p-subtitle"),
-                ],
-                { clipPath: "inset(100% 0 0 0)", y: 30 },
-                {
-                  clipPath: "inset(0% 0 0% 0)",
-                  y: 0,
-                  duration: 0.6,
-                  stagger: 0.1,
-                },
-                0.3,
-              )
-              .fromTo(
-                panel.querySelectorAll(".meta-reveal"),
-                { opacity: 0, y: 15 },
-                { opacity: 1, y: 0, duration: 0.5, stagger: 0.04 },
-                0.5,
-              );
+            // First panel: just HOLD it visible, no intro animation here
+            // The intro is handled by the separate introTl above
+            masterTl.to({}, { duration: 1 });
             return;
           }
 
           const prevPanel = panels[index - 1];
 
+          // ─── Exit previous panel ───
           masterTl
             .to(prevPanel.querySelectorAll(".meta-reveal, .p-subtitle"), {
               opacity: 0,
@@ -156,6 +200,7 @@ export default function Projects() {
               duration: 0.01,
             });
 
+          // ─── Enter current panel ───
           masterTl
             .set(panel, { visibility: "visible", opacity: 1 })
             .fromTo(
@@ -204,7 +249,7 @@ export default function Projects() {
       ref={containerRef}
       className="w-full main-container bg-[#0a0a0a] rounded-t-[40px] text-white select-none"
     >
-      {/* DESKTOP ART DIRECTION TRACKER */}
+      {/* DESKTOP */}
       <div
         ref={scrollTrackRef}
         className="hidden md:block relative h-screen w-full overflow-hidden"
@@ -222,7 +267,7 @@ export default function Projects() {
           <div className="global-progress-fill w-full h-full bg-white origin-left scale-x-0" />
         </div>
 
-        {projectsData.map((project, idx) => (
+        {projectsData.map((project) => (
           <div
             key={project.id}
             className="project-panel absolute inset-0 w-full h-full flex items-center justify-center p-20"
@@ -253,19 +298,11 @@ export default function Projects() {
               </h2>
             </div>
 
-            {/*
-              ── HUD layout frame ──
-              pt-28 / pb-16 instead of p-16: pushes the top row (project
-              number + CTA button) down below the fixed navbar, while
-              keeping the bottom row's original spacing.
-            */}
             <div className="absolute inset-0 w-full h-full px-16 pt-28 pb-16 flex flex-col justify-between pointer-events-none z-30">
-              {/* Top Bar — project number + CTA, now clear of navbar */}
               <div className="flex justify-between items-start w-full">
                 <div className="font-serif text-5xl font-bold opacity-10 meta-reveal">
                   {project.id}
                 </div>
-
                 <div className="pointer-events-auto meta-reveal">
                   <OutlineButton href={`https://${project.liveUrl}`}>
                     EXPLORE CASE
@@ -273,7 +310,6 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Lower HUD Layout Frame */}
               <div className="flex justify-between items-end w-full">
                 <div className="flex gap-16 max-w-[50%]">
                   <div className="space-y-1.5 meta-reveal">
@@ -321,7 +357,7 @@ export default function Projects() {
         ))}
       </div>
 
-      {/* MOBILE LIST LAYOUT */}
+      {/* MOBILE */}
       <div className="block md:hidden px-6 py-20 space-y-24 bg-[#0a0a0a]">
         {projectsData.map((project) => (
           <div key={project.id} className="mobile-project-card space-y-6">
