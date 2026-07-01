@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/ui/NavBar";
+import { Toaster } from "react-hot-toast";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -31,6 +32,34 @@ export default function RootLayout({ children }) {
       <body>
         <NavBar />
         {children}
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#0a0a0a",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,0.15)",
+              fontFamily: "monospace",
+              fontSize: "12px",
+              letterSpacing: "0.05em",
+              padding: "12px 16px",
+              borderRadius: "8px",
+            },
+            success: {
+              iconTheme: {
+                primary: "#fff",
+                secondary: "#0a0a0a",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#0a0a0a",
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );

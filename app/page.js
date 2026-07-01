@@ -37,10 +37,16 @@ export default function Home() {
       /* ---- PIN SECTIONS (all screen sizes) ---- */
       sectionsToPin.forEach((section, index) => {
         const startPosition = index === 0 ? "top top" : "center top";
-
+        const isExprience = section === ".section-exprience";
         ScrollTrigger.create({
           trigger: section,
-          start: startPosition,
+          start: () => {
+            // Mobile: pin experience only from bottom 60% so timeline is visible
+            if (isExprience && window.innerWidth < 768) {
+              return "bottom bottom";
+            }
+            return index === 0 ? "top top" : "center top";
+          },
           end: () => `+=${document.querySelector(section)?.offsetHeight || 0}`,
           pin: true,
           pinSpacing: false,

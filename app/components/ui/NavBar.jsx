@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 
 export default function NavBar() {
@@ -45,7 +46,7 @@ export default function NavBar() {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 main-container transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+      className={`fixed top-0 left-0 right-0 z-60 flex justify-center pt-4 main-container transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
         ${visible ? "translate-y-0" : "-translate-y-28"}
       `}
     >
@@ -61,8 +62,8 @@ export default function NavBar() {
       >
         {/* LOGO NODE */}
         <div className="flex items-center gap-2 group cursor-pointer">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full border border-white/20 text-sm shrink-0 bg-white/5 transition-all duration-300 group-hover:rotate-45 group-hover:border-white/50">
-            🪐
+          <div className="flex items-center justify-center w-8 h-8 rounded-full  text-sm shrink-0 bg-white/5 transition-all duration-300 group-hover:rotate-45 ">
+            <Image width={32} height={32} alt="logo" src={"/icons/code.png"} />
           </div>
           <span className="font-mono text-[11px] tracking-[0.25em] font-black uppercase hidden sm:inline-block">
             MUBASHIR //
