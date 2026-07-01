@@ -24,14 +24,14 @@ export default function Hero() {
       {/* Left Marginal Sub-header */}
       <div className="absolute left-6 lg:left-12 top-24 z-20 pointer-events-none hidden xl:block">
         <span className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase">
-          {"// CREATIVE MATRIX PORTFOLIO"}
+          {"// CREATIVE Web Developer"}
         </span>
       </div>
 
       {/* Right Marginal Vertical Role Tag */}
       <div className="absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 rotate-90 origin-right z-20 pointer-events-none hidden xl:block">
         <span className="font-mono text-[11px] tracking-[0.5em] text-white font-black uppercase whitespace-nowrap">
-          WEB DEVELOPER // MERN SYSTEM ARCHITECT
+          WEB DEVELOPER // Software Engineer
         </span>
       </div>
 
@@ -45,8 +45,10 @@ export default function Hero() {
 
           {/* Elegant Contextual Description under your name */}
           <p className="mt-6 md:mt-8 max-w-[320px] font-sans text-xs md:text-[13px] text-white/50 leading-relaxed font-light tracking-wide">
-            Engineering high-fidelity full stack solutions, crafting clean
-            interactive systems with extreme focus on UI performance.
+            Engineering high-fidelity{" "}
+            <span className="text-foreground">full stack</span> solutions,
+            crafting clean interactive systems with extreme focus on UI
+            performance.
           </p>
         </div>
 

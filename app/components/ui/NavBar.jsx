@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState, useRef, useCallback } from "react";
+import MenuButton from "./MenuButton";
+import OutlineButton from "./OutlineButtons";
 
 const navItems = [
   { name: "Home", id: "home" },
@@ -228,35 +230,23 @@ export default function NavBar() {
 
         {/* DESKTOP CTA */}
         <div className="hidden md:block">
-          <a
+          <OutlineButton
             href="mailto:m.mubashirweb@gmail.com"
-            className={`text-[11px] font-mono tracking-wider font-black px-5 py-2.5 rounded-full transition-all duration-300 whitespace-nowrap shrink-0 border
-              ${
-                scrolled
-                  ? "bg-white text-black border-white hover:bg-transparent hover:text-white"
-                  : "bg-white/5 text-white border-white/10 hover:bg-white hover:text-black hover:border-white"
-              }`}
+            as="a"
+            variant="light"
+            filled
+            showIcon={false}
+            className="px-5 py-2.5 text-[11px]"
           >
             m.mubashirweb@gmail.com
-          </a>
+          </OutlineButton>
         </div>
 
         {/* MOBILE HAMBURGER */}
-        <button
+        <MenuButton
+          isOpen={mobileMenuOpen}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex flex-col justify-center items-center gap-1.5 w-9 h-9 rounded-full bg-white/5 border border-white/10 md:hidden focus:outline-none z-50"
-          aria-label="Toggle Navigation Control"
-        >
-          <span
-            className={`h-[1px] w-4 bg-white transition-all duration-300 ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}
-          />
-          <span
-            className={`h-[1px] w-4 bg-white transition-all duration-300 ${mobileMenuOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`h-[1px] w-4 bg-white transition-all duration-300 ${mobileMenuOpen ? "-rotate-45 -translate-y-1" : ""}`}
-          />
-        </button>
+        />
 
         {/* MOBILE MENU DROPDOWN */}
         <div
@@ -286,12 +276,16 @@ export default function NavBar() {
             })}
           </div>
 
-          <a
+          <OutlineButton
             href="mailto:m.mubashirweb@gmail.com"
-            className="text-[11px] font-mono tracking-wide text-center bg-white text-black py-3 rounded-full font-bold mt-2"
+            as="a"
+            variant="light"
+            filled
+            showIcon={false}
+            className="w-full justify-center text-center py-3"
           >
             m.mubashirweb@gmail.com
-          </a>
+          </OutlineButton>
         </div>
       </nav>
     </div>

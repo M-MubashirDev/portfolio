@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { CustomCursor } from "./components/ui/CustomeCursor";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
       className={`${geist.variable} ${geistMono.variable} ${nunito.variable} h-full antialiased`}
     >
       <body>
+        <CustomCursor />
         {children}
         <Toaster
           position="top-center"
