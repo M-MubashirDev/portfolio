@@ -11,6 +11,7 @@ import Projects from "./components/projects/Projects";
 import Skills from "./components/skill/Skills";
 import Contact from "./components/contact-us/Contact";
 import Footer from "./components/footer/Footer";
+import ProcessTimeline from "./components/exprience/ProcessTimeline";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,8 +92,13 @@ export default function Home() {
         <Projects />
       </section>
 
-      <section className="section-exprience relative z-40 min-h-screen rounded-t-[40px] overflow-hidden">
-        <Exprience />
+      <section className="section-exprience relative z-40 min-h-screen w-full rounded-t-[40px]">
+        <div className="hidden md:block w-full">
+          <Exprience />
+        </div>
+        <div className="block mb-16 md:hidden">
+          <ProcessTimeline />
+        </div>
       </section>
       <section className="section-contact relative z-50 min-h-screen rounded-t-[40px] overflow-hidden">
         <Contact />

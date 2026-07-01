@@ -25,7 +25,7 @@ export function CircleSlider({ items, current, setCurrent }) {
                 <img
                   src={item.logo}
                   alt={item.name}
-                  className="max-h-full max-w-[80%] object-contain"
+                  className="max-h-full max-w-[80%] object-contain grayscale opacity-70 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
                 />
               </div>
 
@@ -34,7 +34,7 @@ export function CircleSlider({ items, current, setCurrent }) {
               </h3>
 
               {/* Updated text styling only */}
-              <p className="card-name relative z-10 mt-3 text-sm font-semibold text-gray-500 tracking-wide max-w-[80%]">
+              <p className="card-name hidden lg:inline-block relative z-10 mt-3 text-sm font-semibold text-gray-500 tracking-wide max-w-[80%]">
                 {item.centerText}
               </p>
             </div>

@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import OutlineButton from "../ui/OutlineButtons";
 
 export default function Contact() {
   const containerRef = useRef(null);
@@ -61,7 +62,7 @@ export default function Contact() {
   return (
     <div
       ref={containerRef}
-      className="w-full bg-[#0a0a0a] text-white py-32 md:py-48 relative overflow-hidden"
+      className="w-full main-container bg-[#0a0a0a] text-white py-32 md:py-48 relative overflow-hidden"
     >
       {/* Subtle ambient glow backing */}
       <div
@@ -184,15 +185,9 @@ export default function Contact() {
 
             {/* Row 4: Action Footer */}
             <div className="contact-form-row pt-4 flex items-center justify-between">
-              <button
-                type="submit"
-                className="group flex items-center gap-4 font-mono text-[11px] tracking-[0.2em] text-white font-bold border border-white/20 hover:border-white rounded-full px-8 py-3.5 bg-white/5 hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
-              >
-                SUBMIT INQUIRY
-                <span className="inline-block transform group-hover:translate-x-1 transition-transform duration-300 text-[12px]">
-                  &rarr;
-                </span>
-              </button>
+              <OutlineButton as="button" variant="dark" type="submit">
+                Submit Inquiry
+              </OutlineButton>
 
               <span className="hidden md:inline-block font-mono text-[10px] text-white/50 tracking-wider">
                 // RESPONSIVENESS WINDOW WITHIN 24H

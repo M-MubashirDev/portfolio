@@ -9,64 +9,69 @@ const BRAND_SLIDES = [
   {
     name: "NexaVista",
     logo: "/images/nexaVistaLogo.svg",
-    centerText: "Modern digital experiences crafted for ambitious brands.",
+
+    centerText:
+      "My first professional journey, turning ideas into real products.",
+
     whyChoose: [
       {
-        title: "Vision-Led Strategy",
-        descrption:
-          "We align product design and development with your long-term business vision.",
+        title: "Journey",
+        description: "Full Stack • September 2024 — August 2025",
       },
       {
-        title: "Elegant User Experience",
-        descrption:
-          "We build intuitive, polished, and user-focused interfaces that leave a lasting impact.",
+        title: "Projects",
+        description:
+          "Developed Freshify, Car Wash, and Foodie using modern frontend practices.",
       },
       {
-        title: "Fast Product Execution",
-        descrption:
-          "From idea to launch, we move quickly while maintaining quality and attention to detail.",
+        title: "Teamwork",
+        description:
+          "Learned collaboration, Git workflows, communication, and code reviews.",
       },
       {
-        title: "Scalable Digital Growth",
-        descrption:
-          "Our solutions are built to evolve with your brand as your audience and business expand.",
+        title: "Growth",
+        description:
+          "Built a strong foundation in React, APIs, and clean code.",
       },
     ],
   },
+
   {
     name: "InfinityBits",
     logo: "/images/infinityBitsLogo.svg",
-    centerText: "Reliable engineering and scalable products built for growth.",
+
+    centerText:
+      "Crafting polished user experiences with modern frontend technologies.",
+
     whyChoose: [
       {
-        title: "Expertise",
-        descrption:
-          "Our skilled team stays ahead of digital trends to deliver innovative, cutting-edge solutions.",
+        title: "Journey",
+        description: "Frontend Developer • August 2025 — Present",
       },
       {
-        title: "Results-Driven Solutions",
-        descrption:
-          "We combine creativity and technology to craft digital products that drive growth and enhance user experience.",
+        title: "Projects",
+        description:
+          "Worked on Axigma, FarmsDrop, and the InfinityBits Portfolio.",
       },
       {
-        title: "Client-Centric Approach",
-        descrption:
-          "We put clients first, listening to your goals and challenges to deliver tailored solutions. Your success is our priority.",
+        title: "Professional Growth",
+        description:
+          "Improved UI architecture, teamwork, and product-focused development.",
       },
       {
-        title: "Collaborative Partnership",
-        descrption:
-          "We build long-term partnerships, offering continuous support and updates to keep your digital products thriving.",
+        title: "Growth",
+        description:
+          "Strengthened my skills in React, Next.js, state management, and UI performance.",
       },
     ],
   },
 ];
 
 const textPositions = [
-  "w-fit translate-y-[250%] mr-10 -translate-x-[15%] lg:translate-y-[220%] xl:translate-y-[250%] z-100 mb-4",
+  "w-fit translate-y-[250%] lg:mr-10 mr-2 -translate-x-[15%] lg:translate-y-[220%] xl:translate-y-[250%] z-100 mb-4",
   "w-fit -translate-x-[15%] lg:translate-y-[20%] xl:translate-y-[30%] z-100 mb-4",
   "w-fit translate-x-[10%] lg:translate-y-[20%] xl:translate-y-[30%] z-100 mb-4",
-  "w-fit translate-y-[250%] translate-x-[25%] ml-10 lg:translate-y-[220%] xl:translate-y-[250%] z-100 mb-4",
+  "w-fit translate-y-[250%] translate-x-[25%] lg:ml-10 lg:translate-y-[220%] xl:translate-y-[250%] z-100 mb-4",
 ];
 
 const tabKeys = ["first", "second", "third", "fourth"];
@@ -78,39 +83,43 @@ export default function Exprience() {
   const currentContent = BRAND_SLIDES[currentBrand];
 
   return (
-    <div
-      className="pt-24 main-container rounded-t-2xl"
-      style={{ background: "#ffffff" }}
-    >
-      <h2 className="font-heading text-9xl text-center capitalize indent-16 leading-26 text-foreground font-bold p-4 textImage mb-12">
-        tech stack
-      </h2>
+    <div className="pt-24  rounded-t-2xl" style={{ background: "#ffffff" }}>
+      <div className="main-container">
+        <h2
+          className="font-heading 
+          text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl 
+          text-center capitalize tracking-tighter leading-none text-foreground font-bold 
+          p-2 sm:p-4 textImage"
+        >
+          tech stack
+        </h2>
 
-      <div className="flex flex-col items-center">
-        <div className="flex">
-          {currentContent.whyChoose.map((item, index) => (
-            <div
-              key={`${currentContent.name}-${item.title}-${index}`}
-              className={textPositions[index]}
-            >
-              <WhyChoseText
-                active={activeTab === tabKeys[index]}
-                title={item.title}
-                descrption={item.descrption}
-              />
-            </div>
-          ))}
-        </div>
+        <div className="flex flex-col items-center">
+          <div className="flex">
+            {currentContent.whyChoose.map((item, index) => (
+              <div
+                key={`${currentContent.name}-${item.title}-${index}`}
+                className={textPositions[index]}
+              >
+                <WhyChoseText
+                  active={activeTab === tabKeys[index]}
+                  title={item.title}
+                  descrption={item.description}
+                />
+              </div>
+            ))}
+          </div>
 
-        <UmbrellaArch setActiveTab={setActiveTab} activeTab={activeTab} />
+          <UmbrellaArch setActiveTab={setActiveTab} activeTab={activeTab} />
 
-        <div className="md:w-44 md:h-44 min-[800px]:w-56 min-[800px]:h-56 min-[1000px]:w-60 min-[1000px]:h-60 lg:w-60 lg:h-60 xl:h-75 xl:w-75 translate-y-[-75%]">
-          <CircleSlider
-            items={BRAND_SLIDES}
-            current={currentBrand}
-            setCurrent={setCurrentBrand}
-            interval={3500}
-          />
+          <div className="md:w-44 md:h-44 min-[800px]:w-56 min-[800px]:h-56 min-[1000px]:w-60 min-[1000px]:h-60 lg:w-60 lg:h-60 xl:h-75 xl:w-75 translate-y-[-85%]">
+            <CircleSlider
+              items={BRAND_SLIDES}
+              current={currentBrand}
+              setCurrent={setCurrentBrand}
+              interval={3500}
+            />
+          </div>
         </div>
       </div>
     </div>

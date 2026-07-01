@@ -3,32 +3,31 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import OutlineButton from "../ui/OutlineButtons";
 
 const projectsData = [
   {
     id: "01",
-    title: "NEO CART",
-    subtitle: "GLASSY E-COMMERCE",
-    descLine1: "High fidelity architectural layouts featuring",
-    descLine2: "custom minimalist UI components and fake API.",
+    title: "Freshify",
+    subtitle: "SASS",
+    descLine1: "Multi role modern barber application",
+    descLine2: "minimalist UI components and real world use case.",
     coreTech: ["React", "Node.js", "MongoDB"],
-    allTech: ["Tailwind CSS", "Redux Toolkit", "Stripe", "Express"],
-    image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-    liveUrl: "#",
+    allTech: ["Tailwind CSS", "TanStack Query", "Stripe", "Express"],
+    image: "/images/freshify.png",
+    liveUrl: "freshify.nl",
   },
   {
     id: "02",
-    title: "AETHER ARCHIVE",
-    subtitle: "HEADLESS ENGINE",
-    descLine1: "Distributed asset management mapping system",
-    descLine2: "optimized for real-time asset delivery streams.",
-    coreTech: ["React", "Express", "PostgreSQL"],
-    allTech: ["Mantine UI", "Google Calendar API", "Docker", "TypeScript"],
-    image:
-      "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80",
-    liveUrl: "#",
+    title: "FarmsDrop",
+    subtitle: "Grocery Delivery Platform",
+    descLine1: "Order fresh groceries with a seamless shopping experience.",
+    descLine2:
+      "Browse products, manage your cart, and enjoy fast doorstep delivery.",
+    coreTech: ["Next js", "Express", "PostgreSQL"],
+    allTech: ["Custom UI", "Firebase", "TanStack Query", "tailwind"],
+    image: "/images/farmsdrop.png",
+    liveUrl: "farmsdrop.com",
   },
   {
     id: "03",
@@ -73,26 +72,22 @@ export default function Projects() {
       });
 
       // Desktop setup
-      // Desktop setup
       mm.add("(min-width: 768px)", () => {
         const panels = gsap.utils.toArray(".project-panel");
 
-        // Hide initial overlay states
         gsap.set(panels.slice(1), { opacity: 0, visibility: "hidden" });
 
-        // 1. INDEPENDENT PROGRESS BAR TRACKER (Always Synced to absolute scroll position)
         gsap.to(".global-progress-fill", {
           scaleX: 1,
           ease: "none",
           scrollTrigger: {
             trigger: scrollTrackRef.current,
             start: "top top",
-            end: () => `+=${panels.length * 120}%`, // Matches the exact end length below
-            scrub: true, // Tied directly to the active viewport position
+            end: () => `+=${panels.length * 120}%`,
+            scrub: true,
           },
         });
 
-        // 2. MASTER STRUCTURAL PANEL PIN TIMELINE
         const masterTl = gsap.timeline({
           scrollTrigger: {
             trigger: scrollTrackRef.current,
@@ -107,7 +102,6 @@ export default function Projects() {
 
         panels.forEach((panel, index) => {
           if (index === 0) {
-            // First panel entrance sequence on page enter
             masterTl
               .fromTo(
                 panel.querySelector(".p-bg-image"),
@@ -140,7 +134,6 @@ export default function Projects() {
 
           const prevPanel = panels[index - 1];
 
-          // Outgoing Panel Fade Out Phase
           masterTl
             .to(prevPanel.querySelectorAll(".meta-reveal, .p-subtitle"), {
               opacity: 0,
@@ -149,20 +142,12 @@ export default function Projects() {
             })
             .to(
               prevPanel.querySelector(".p-title"),
-              {
-                clipPath: "inset(100% 0 0 0)",
-                y: -30,
-                duration: 0.3,
-              },
+              { clipPath: "inset(100% 0 0 0)", y: -30, duration: 0.3 },
               "<",
             )
             .to(
               prevPanel.querySelector(".p-bg-image"),
-              {
-                opacity: 0,
-                scale: 0.95,
-                duration: 0.4,
-              },
+              { opacity: 0, scale: 0.95, duration: 0.4 },
               "<",
             )
             .to(prevPanel, {
@@ -171,18 +156,13 @@ export default function Projects() {
               duration: 0.01,
             });
 
-          // Incoming Panel Sequence
           masterTl
             .set(panel, { visibility: "visible", opacity: 1 })
-
-            // Image Appears
             .fromTo(
               panel.querySelector(".p-bg-image"),
               { opacity: 0, scale: 1.08 },
               { opacity: 0.22, scale: 1, duration: 0.45 },
             )
-
-            // Main Bold Typographic Stamp Reveals
             .fromTo(
               [
                 panel.querySelector(".p-title"),
@@ -197,16 +177,12 @@ export default function Projects() {
               },
               "-=0.1",
             )
-
-            // Supporting metadata staggers in
             .fromTo(
               panel.querySelectorAll(".meta-reveal"),
               { opacity: 0, y: 20 },
               {
-                opacity: (i, el) => {
-                  if (el.classList.contains("tech-tag-aux")) return 0.35;
-                  return 1;
-                },
+                opacity: (i, el) =>
+                  el.classList.contains("tech-tag-aux") ? 0.35 : 1,
                 y: 0,
                 duration: 0.4,
                 stagger: 0.04,
@@ -214,7 +190,6 @@ export default function Projects() {
               "-=0.2",
             );
 
-          // Resting layout cushion block
           masterTl.to({}, { duration: 0.5 });
         });
       });
@@ -234,7 +209,6 @@ export default function Projects() {
         ref={scrollTrackRef}
         className="hidden md:block relative h-screen w-full overflow-hidden"
       >
-        {/* Soft Global Base Flow Lighting Overlay */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] pointer-events-none z-10"
           style={{
@@ -244,7 +218,6 @@ export default function Projects() {
           }}
         />
 
-        {/* Global Progress Bar Tracking Line */}
         <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white/5 z-40">
           <div className="global-progress-fill w-full h-full bg-white origin-left scale-x-0" />
         </div>
@@ -254,9 +227,6 @@ export default function Projects() {
             key={project.id}
             className="project-panel absolute inset-0 w-full h-full flex items-center justify-center p-20"
           >
-            {/* THE WATERMARK CONTAINER: 
-              We feather the edges using a CSS radial gradient mask to drop harsh boxy layout edges completely.
-            */}
             <div
               className="p-bg-image absolute w-full max-w-[850px] aspect-[16/10] z-0 pointer-events-none opacity-0"
               style={{
@@ -274,7 +244,6 @@ export default function Projects() {
               />
             </div>
 
-            {/* INTERSECTING CENTRAL BOLD HEADING */}
             <div className="relative z-20 text-center pointer-events-none select-none">
               <span className="p-subtitle block font-mono text-[11px] tracking-[0.4em] text-white/40 mb-3 uppercase">
                 {project.subtitle}
@@ -284,33 +253,29 @@ export default function Projects() {
               </h2>
             </div>
 
-            {/* SCATTERED ADJACENT DESIGN CONTEXT FRAMES */}
-            <div className="absolute inset-0 w-full h-full p-16 flex flex-col justify-between pointer-events-none z-30">
-              {/* Top Bar Navigation HUD */}
+            {/*
+              ── HUD layout frame ──
+              pt-28 / pb-16 instead of p-16: pushes the top row (project
+              number + CTA button) down below the fixed navbar, while
+              keeping the bottom row's original spacing.
+            */}
+            <div className="absolute inset-0 w-full h-full px-16 pt-28 pb-16 flex flex-col justify-between pointer-events-none z-30">
+              {/* Top Bar — project number + CTA, now clear of navbar */}
               <div className="flex justify-between items-start w-full">
                 <div className="font-serif text-5xl font-bold opacity-10 meta-reveal">
                   {project.id}
                 </div>
 
-                {/* Redirection Action Link Button */}
                 <div className="pointer-events-auto meta-reveal">
-                  <a
-                    href={project.liveUrl}
-                    className="group flex items-center gap-3 font-mono text-[10px] tracking-widest text-white/60 hover:text-white transition-colors duration-300 border border-white/10 hover:border-white/30 rounded-full px-5 py-2.5 bg-black/40 backdrop-blur-md"
-                  >
+                  <OutlineButton href={`https://${project.liveUrl}`}>
                     EXPLORE CASE
-                    <span className="inline-block transform group-hover:translate-x-1 transition-transform duration-300 text-[12px]">
-                      &rarr;
-                    </span>
-                  </a>
+                  </OutlineButton>
                 </div>
               </div>
 
               {/* Lower HUD Layout Frame */}
               <div className="flex justify-between items-end w-full">
-                {/* Tech Layout Grid Specifier Blocks */}
                 <div className="flex gap-16 max-w-[50%]">
-                  {/* Core Structural Engines */}
                   <div className="space-y-1.5 meta-reveal">
                     <span className="block font-mono text-[9px] text-white/30 tracking-wider">
                       {"// CORE ENGINE"}
@@ -325,7 +290,6 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  {/* Auxiliary Subsystems List */}
                   <div className="space-y-1.5 hidden lg:block meta-reveal tech-tag-aux">
                     <span className="block font-mono text-[9px] text-white/20 tracking-wider">
                       {"// INTEGRATIONS"}
@@ -338,14 +302,12 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Right Bottom Layout Flag */}
                 <div className="font-mono text-[10px] tracking-[0.2em] opacity-20 hidden md:block meta-reveal">
                   MERN STAGE POOL
                 </div>
               </div>
             </div>
 
-            {/* VERTICAL TWO LINE MARGIN DESCRIPTION */}
             <div className="absolute left-10 top-1/2 -translate-y-1/2 rotate-90 origin-left translate-x-4 pointer-events-none z-30 hidden xl:block">
               <div className="meta-reveal font-sans text-[11px] text-[#777] tracking-wide leading-none space-y-1 whitespace-nowrap">
                 <p className="uppercase font-mono text-[9px] text-white/20 tracking-[0.2em] mb-1">
@@ -397,6 +359,9 @@ export default function Projects() {
                 </span>
               ))}
             </div>
+            <OutlineButton href={`https://${project.liveUrl}`}>
+              EXPLORE CASE
+            </OutlineButton>
           </div>
         ))}
       </div>

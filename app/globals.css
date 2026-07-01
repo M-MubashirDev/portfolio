@@ -21,7 +21,7 @@
   }
 }
 @utility main-container {
-  @apply container mx-auto lg:px-16 xl:px-24;
+  @apply container mx-auto px-2 lg:px-16 xl:px-24;
 }
 body {
   background: var(--background);
